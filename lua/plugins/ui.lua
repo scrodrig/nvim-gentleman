@@ -225,6 +225,10 @@ return {
       notifier = {},
       image = {},
       picker = {
+        layout = {
+          preset = "telescope",
+          reverse = true,
+        },
         exclude = {
           ".git",
           "node_modules",
