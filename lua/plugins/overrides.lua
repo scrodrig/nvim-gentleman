@@ -1,6 +1,16 @@
 -- This file contains the configuration overrides for specific Neovim plugins.
 
 return {
+{
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = function(_, opts)
+      opts.window = opts.window or {}
+      opts.window.title = function(state)
+        return vim.fn.fnamemodify(state.path, ":t")
+      end
+    end,
+  },
+
   -- Change configuration for trouble.nvim
   {
     -- Plugin: trouble.nvim

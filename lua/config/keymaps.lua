@@ -135,6 +135,11 @@ vim.keymap.set("v", "<leader>sG", function()
   end
 end, { desc = "Grep Selected Text (Root Dir)" })
 
+-- Search current buffer as popup (override LazyVim default ivy layout)
+vim.keymap.set("n", "<leader>sb", function()
+  Snacks.picker.lines({ layout = { preset = "telescope" } })
+end, { desc = "Buffer Lines" })
+
 -- Delete all marks
 vim.keymap.set("n", "<leader>md", function()
   vim.cmd("delmarks!")

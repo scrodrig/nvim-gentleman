@@ -3,7 +3,8 @@ return {
   optional = true,
   opts = function()
     require("copilot.api").status = require("copilot.status")
-    require("copilot.api").filetypes = {
+    return {
+      disable_limit_reached_message = true,
       filetypes = {
         yaml = false,
         markdown = false,
