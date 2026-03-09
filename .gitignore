@@ -1,0 +1,14 @@
+# Neovim swap/backup files
+*.swp
+*.swo
+*~
+
+# Spell binary files (auto-generated from .txt)
+spell/*.spl
+spell/*.sug
+
+# Undo history
+undo/
+
+# Sessions
+session/
