@@ -15,7 +15,7 @@ return {
       function()
         require("rip-substitute").sub() -- Call the substitution function from the plugin
       end,
-      mode = { "n", "x" }, -- Enable the keybinding in normal and visual modes
+      mode = { "n", "x" }, -- Enables the keybinding in normal and visual modes
       desc = " rip substitute", -- Description for the keybinding
     },
   },
