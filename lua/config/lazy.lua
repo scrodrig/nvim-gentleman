@@ -105,3 +105,5 @@ require("lazy").setup({
     },
   },
 })
+
+require("config.eslint-keymap")
