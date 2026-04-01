@@ -4,6 +4,46 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- git.nvim diff buffers don't get filetype set, so treesitter won't attach.
+-- Copy filetype from any diff window that has it, then force treesitter start.
+local function is_diff_win(win)
+  return vim.api.nvim_win_get_option(win, "diff")
+end
+
+local function fix_diff_filetypes()
+  local wins = vim.api.nvim_tabpage_list_wins(0)
+  local diff_wins = vim.tbl_filter(is_diff_win, wins)
+  if #diff_wins < 2 then return false end
+
+  local ft_source = ""
+  for _, win in ipairs(diff_wins) do
+    local ft = vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+    if ft ~= "" then ft_source = ft; break end
+  end
+
+  if ft_source == "" then return false end
+
+  for _, win in ipairs(diff_wins) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == "" then
+      vim.bo[buf].filetype = ft_source
+      pcall(vim.treesitter.start, buf)
+    end
+  end
+  return true
+end
+
+vim.keymap.set("n", "<leader>gd", function()
+  require("git.diff").open()
+  local attempts = 0
+  local function poll()
+    if fix_diff_filetypes() or attempts >= 20 then return end
+    attempts = attempts + 1
+    vim.defer_fn(poll, 100)
+  end
+  vim.defer_fn(poll, 100)
+end, { desc = "Git diff" })
+
 -- Map Ctrl+b in insert mode to delete to the end of the word without leaving insert mode
 vim.keymap.set("i", "<C-b>", "<C-o>de")
 
