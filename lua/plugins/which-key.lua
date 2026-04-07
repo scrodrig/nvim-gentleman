@@ -11,7 +11,7 @@ return {
   init = function()
     -- Set the timeout for key sequences
     vim.o.timeout = true
-    vim.o.timeoutlen = 300 -- Set the timeout length to 300 milliseconds
+    vim.o.timeoutlen = 0 -- Show which-key immediately
   end,
 
   keys = {
